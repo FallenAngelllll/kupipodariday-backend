@@ -1,0 +1,144 @@
+### 🚀 Регистрация пользователя
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+  "username": "julia",
+  "email": "julia@example.com",
+  "password": "123456",
+  "about": "Хочу вишлист!"
+}
+
+### 🔐 Вход пользователя
+POST http://localhost:3000/signin
+Content-Type: application/json
+
+{
+  "username": "julia",
+  "password": "123456"
+}
+
+### 👤 Получить текущего пользователя
+# Вставить access_token из логина ниже 👇
+GET http://localhost:3000/users/me
+Authorization: Bearer {{access_token}}
+
+### 🎁 Добавить подарок
+POST http://localhost:3000/wishes
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "PlayStation 5",
+  "link": "https://store.playstation.com",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/PlayStation_5.png/600px-PlayStation_5.png",
+  "price": 599.99,
+  "description": "Консоль нового поколения, хочу очень давно!"
+}
+
+### 📜 Получить все подарки
+GET http://localhost:3000/wishes
+Authorization: Bearer {{access_token}}
+
+### 🔍 Получить один подарок
+GET http://localhost:3000/wishes/1
+Authorization: Bearer {{access_token}}
+
+### ✏️ Обновить подарок
+PATCH http://localhost:3000/wishes/1
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "description": "Обновлённое описание подарка",
+  "price": 649.99
+}
+
+### ❌ Удалить подарок
+DELETE http://localhost:3000/wishes/1
+Authorization: Bearer {{access_token}}
+
+### 📰 Последние 40 подарков
+GET http://localhost:3000/wishes/last
+
+### 🏆 Топ 20 популярных подарков
+GET http://localhost:3000/wishes/top
+
+### 📥 Скопировать подарок (не свой!)
+POST http://localhost:3000/wishes/1/copy
+Authorization: Bearer {{access_token}}
+
+### 💸 Скинуться на подарок
+POST http://localhost:3000/offers
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "itemId": 2,
+  "amount": 100,
+  "hidden": false
+}
+
+### 📜 Получить все заявки
+GET http://localhost:3000/offers
+Authorization: Bearer {{access_token}}
+
+### 🔍 Получить заявку по ID
+GET http://localhost:3000/offers/1
+Authorization: Bearer {{access_token}}
+
+### 📚 Создать вишлист
+POST http://localhost:3000/wishlists
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "На день рождения",
+  "description": "Мои хотелки на ДР 🎉",
+  "image": "https://i.imgur.com/random.jpg",
+  "itemsId": [1, 2]
+}
+
+### 📜 Все вишлисты
+GET http://localhost:3000/wishlists
+Authorization: Bearer {{access_token}}
+
+### 🔍 Вишлист по ID
+GET http://localhost:3000/wishlists/1
+Authorization: Bearer {{access_token}}
+
+### ✏️ Обновить вишлист
+PATCH http://localhost:3000/wishlists/1
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "Обновлённый список на ДР",
+  "itemsId": [2]
+}
+
+### ❌ Удалить вишлист
+DELETE http://localhost:3000/wishlists/1
+Authorization: Bearer {{access_token}}
+
+### 👤 Мой профиль
+GET http://localhost:3000/users/me
+Authorization: Bearer {{access_token}}
+
+### ✏️ Обновить профиль
+PATCH http://localhost:3000/users/me
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "about": "Обновлённое описание профиля",
+  "avatar": "https://i.pravatar.cc/300?img=5"
+}
+
+### 🔍 Найти пользователей
+POST http://localhost:3000/users/find?query=test
+Authorization: Bearer {{access_token}}
+
+### 👀 Чужой профиль по username
+GET http://localhost:3000/users/second_user
+Authorization: Bearer {{access_token}}
