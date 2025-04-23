@@ -53,8 +53,8 @@ export class WishlistsService {
     wishlist.owner = excludePassword(wishlist.owner) as User;
 
     wishlist.items = wishlist.items.map((item) => ({
-      owner: excludePassword(item.owner) as User,
       ...item,
+      owner: excludePassword(item.owner) as User,
     }));
 
     return wishlist;

@@ -44,27 +44,46 @@ export class OffersService {
       item: wish,
     });
 
-    return this.offerRepo.save(offer);
+    const savedOffer = await this.offerRepo.save(offer);
+
+    if (savedOffer.item?.owner) {
+      savedOffer.item.owner = excludePassword(savedOffer.item.owner) as User;
+    }
+
+    return savedOffer;
   }
 
   async findAll() {
-    const offers = await this.offerRepo.find({ relations: ['user', 'item'] });
+    const offers = await this.offerRepo.find({ relations: ['user', 'item', 'item.owner'] });
 
-    return offers.map((offer) => ({
-      user: excludePassword(offer.user) as User,
-      ...offer,
-    }));
+    return offers.map((offer) => {
+      const cleanOffer = {
+        ...offer,
+        user: excludePassword(offer.user) as User,
+      };
+
+      if (offer.item?.owner) {
+        cleanOffer.item.owner = excludePassword(offer.item.owner) as User;
+      }
+
+      return cleanOffer;
+    });
   }
 
   async find(id: number) {
     const offer = await this.offerRepo.findOne({
       where: { id },
-      relations: ['user', 'item'],
+      relations: ['user', 'item', 'item.owner'],
     });
 
     if (!offer) throw new NotFoundException('Оффер не найден');
 
     offer.user = excludePassword(offer.user) as User;
+
+    if (offer.item?.owner) {
+      offer.item.owner = excludePassword(offer.item.owner) as User;
+    }
+
     return offer;
   }
 }
